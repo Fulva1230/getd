@@ -10,7 +10,7 @@ export class PollPullerService {
   constructor() {
   }
 
-  pull(): Observable<Pollbox> {
+  pull(questionId: string): Observable<Pollbox> {
     throw new Error();
   }
 }
