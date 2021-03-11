@@ -3,6 +3,8 @@ import {createFakePollbox, createFakePollList} from './sample-data';
 import {PollboxComponent} from '../app/pollbox/pollbox.component';
 import {PollPullerService} from '../app/cloudservices/poll-puller.service';
 import {PollPosterService} from '../app/cloudservices/poll-poster.service';
+import {Pollbox} from '../app/containers/pollbox';
+import {DatetimeService} from '../app/cloudservices/datetime.service';
 
 export const mockPollList = () => {
   const pollListServiceSpy = jasmine.createSpyObj(['refresh']);
@@ -15,12 +17,15 @@ export const mockPollList = () => {
 export const mockPollPullerAndPoster = () => {
   const pollPosterSpy: jasmine.SpyObj<PollPosterService> = jasmine.createSpyObj(['post']);
   const pollPullerSpy: jasmine.SpyObj<PollPullerService> = jasmine.createSpyObj(['pull']);
-  const thisPollbox = createFakePollbox();
+  const pollboxmap = new Map<string, Pollbox>();
   pollPullerSpy.pull.and.callFake((questionId) => {
-    if (questionId === '123') {
-      return of(thisPollbox);
+    const optionalPollBox = pollboxmap.get(questionId);
+    if (optionalPollBox) {
+      return of(optionalPollBox);
     } else {
-      return of();
+      const fakePollBox = createFakePollbox();
+      pollboxmap.set(questionId, fakePollBox);
+      return of(fakePollBox);
     }
   });
   pollPosterSpy.post.and.callFake((request) => {
@@ -33,4 +38,12 @@ export const mockPollPullerAndPoster = () => {
     return doneSubject;
   });
   return {pollPullerSpy, pollPosterSpy};
+};
+
+export const mockDateTime = () => {
+  const datetimeSpy: jasmine.SpyObj<DatetimeService> = jasmine.createSpyObj(['now']);
+  datetimeSpy.now.and.callFake(() => {
+    return of(new Date());
+  });
+  return datetimeSpy;
 };

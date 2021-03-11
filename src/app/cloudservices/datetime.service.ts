@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ export class DatetimeService {
   constructor() {
   }
 
-  now(): Date {
+  now(): Observable<Date> {
     throw new Error('Not implemented');
   }
 }

@@ -5,6 +5,7 @@ import {PollPosterService} from '../cloudservices/poll-poster.service';
 import {DetermineRequest} from '../containers/determine-request';
 import {Determine} from '../containers/determine';
 import {DatetimeService} from '../cloudservices/datetime.service';
+import {combineLatest} from 'rxjs';
 
 @Component({
   selector: 'app-pollbox',
@@ -36,10 +37,12 @@ export class PollboxComponent implements OnInit {
   }
 
   determine(select: string): void {
-    this.pollPoster
-      .post(new DetermineRequest(new Determine(this.applierName, this.questionId, select, this.datetimeProvider.now())))
-      .subscribe(() => {
-        this.refreshPoll().then();
-      });
+    this.datetimeProvider.now().subscribe((date) => {
+      this.pollPoster
+        .post(new DetermineRequest(new Determine(this.applierName, this.questionId, select, date)))
+        .subscribe(() => {
+          this.refreshPoll().then();
+        });
+    });
   }
 }
