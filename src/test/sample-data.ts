@@ -2,7 +2,7 @@ import {Pollbox} from '../app/containers/pollbox';
 import {Question} from '../app/containers/question';
 import {Determine} from '../app/containers/determine';
 
-export const createPollbox = () => {
+export const createFakePollbox = () => {
   const pollboxinst = new Pollbox(new Question('123', '123', ['123456', '123456'], ['yes', 'no']));
   pollboxinst.determines = [
     new Determine('John', '123', 'yes', new Date(1999, 12, 19, 12, 23)),
@@ -13,4 +13,13 @@ export const createPollbox = () => {
     new Determine('Alice', '123', 'yes', new Date(1999, 11, 3, 11, 33)),
   ];
   return pollboxinst;
+};
+
+export const createFakePollList = () => {
+  return [
+    '123',
+    '456',
+    '789',
+    '876',
+  ];
 };

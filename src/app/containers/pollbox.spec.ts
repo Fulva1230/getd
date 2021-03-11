@@ -1,10 +1,10 @@
 import {Pollbox} from './pollbox';
-import {createPollbox} from '../../test/sample-data';
+import {createFakePollbox} from '../../test/sample-data';
 
 describe('Pollbox', () => {
   let pollbox: Pollbox;
   beforeEach(() => {
-    pollbox = createPollbox();
+    pollbox = createFakePollbox();
   });
 
   it('sort by date', () => {

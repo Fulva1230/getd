@@ -1,5 +1,5 @@
 import {PollboxComponent} from './pollbox.component';
-import {createPollbox} from '../../test/sample-data';
+import {createFakePollbox} from '../../test/sample-data';
 import createSpyObj = jasmine.createSpyObj;
 import {PollPosterService} from '../cloudservices/poll-poster.service';
 import {of, ReplaySubject, Subject} from 'rxjs';
@@ -17,7 +17,7 @@ describe('PollboxComponent', () => {
     pollPullerSpy = createSpyObj('PollPuller', ['pull']);
     datetimeSpy = createSpyObj('Datetime', ['now']);
     component = new PollboxComponent(pollPullerSpy, pollPosterSpy, datetimeSpy);
-    const thisPollbox = createPollbox();
+    const thisPollbox = createFakePollbox();
     pollPullerSpy.pull.and.callFake((questionId) => {
       if (questionId === '123') {
         return of(thisPollbox);
@@ -50,6 +50,5 @@ describe('PollboxComponent', () => {
     expect(component.pollbox.determines.length).toBe(7);
     expect(component.pollbox.determines[6].applier).toBe('Stone');
     expect(component.pollbox.determines[6].datetime.getTime()).toBe(nowdatetime.getTime());
-
   });
 });
