@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pop up redirect</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/oidc-client/1.11.5/oidc-client.min.js"></script>
+  <script>
+    var mgr = new Oidc.UserManager();
+    mgr.signinPopupCallback().then(() => {
+      window.history.replaceState({},
+        window.document.title,
+        window.location.origin);
+      window.close();
+    }, error => {
+      console.error(error);
+    });
+  </script>
+</head>
+<body>
+
+</body>
+</html>

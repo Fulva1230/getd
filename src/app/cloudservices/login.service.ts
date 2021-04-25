@@ -7,19 +7,18 @@ import {settings} from '../../environments/signin.settings';
   providedIn: 'root'
 })
 export class LoginService {
-  tokenSubject = new ReplaySubject<string | null>(1);
+  tokenSubject: ReplaySubject<null | string> = new ReplaySubject<string | null>(1);
   userManager = new UserManager(settings);
 
   constructor() {
-    this.userManager.signinRedirectCallback().then(user => {
-      this.tokenSubject.next(user.access_token);
-    }, error => {
-      console.error(error);
-    });
+    this.tokenSubject.next(null);
   }
 
   login(): void {
-    this.userManager.signinRedirect();
+    this.userManager.signinPopup().then(user => {
+      this.tokenSubject.next(user.access_token);
+      this.userManager.startSilentRenew();
+    });
   }
 
   /**

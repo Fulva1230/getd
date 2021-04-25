@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {LoginDebugComponent} from './debug/login-debug/login-debug.component';
+import {DebugCenterComponent} from './debug/debug-center/debug-center.component';
 
 const routes: Routes = [
-  {path: 'debug', component: LoginDebugComponent},
+  {path: 'debug', component: DebugCenterComponent},
 ];
 
 @NgModule({
