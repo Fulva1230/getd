@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {PollListService} from '../../cloudservices/poll-list.service';
 import {PollPullerService} from '../../cloudservices/poll-puller.service';
+import {PollPosterService} from '../../cloudservices/poll-poster.service';
+import {Determine} from '../../containers/determine';
+import {DetermineRequest} from '../../containers/determine-request';
 
 @Component({
   selector: 'app-debug-center',
@@ -13,6 +16,7 @@ export class DebugCenterComponent implements OnInit {
   constructor(
     private pollListService: PollListService,
     private pollpullerService: PollPullerService,
+    private pollposterService: PollPosterService,
   ) {
   }
 
@@ -30,6 +34,16 @@ export class DebugCenterComponent implements OnInit {
   pullpollbox(): void {
     this.pollpullerService.pull('1aVNKjj0RhBc1GMr6mj1wXZO3eUDhh2rTvVynAsc5rgU').subscribe(res => {
       console.log(res);
+    });
+  }
+
+  postpollbox(): void {
+    const determine = new Determine('nick', '1aVNKjj0RhBc1GMr6mj1wXZO3eUDhh2rTvVynAsc5rgU', 'sss', new Date());
+    this.pollposterService.post(new DetermineRequest(determine)).subscribe(res => {
+    }, err => {
+      console.log(err);
+    }, () => {
+      console.log('complete');
     });
   }
 }
