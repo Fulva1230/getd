@@ -1,8 +1,5 @@
 import {PollboxComponent} from './pollbox.component';
-import {createFakePollbox} from '../../test/sample-data';
-import createSpyObj = jasmine.createSpyObj;
 import {PollPosterService} from '../cloudservices/poll-poster.service';
-import {of, ReplaySubject, Subject} from 'rxjs';
 import {PollPullerService} from '../cloudservices/poll-puller.service';
 import {DatetimeService} from '../cloudservices/datetime.service';
 import {mockDateTime, mockPollPullerAndPoster} from '../../test/service-mock';

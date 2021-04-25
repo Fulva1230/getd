@@ -16,7 +16,7 @@ export class PollListService {
   /**
    * @returns an observable of poll-list, the obseravle should only return once and complete
    */
-  refresh(): Observable<string[]> {
+  refresh(): Observable<string[] | null> {
     return this.loginService.accessToken().pipe(take(1), map(accessToken => {
       if (accessToken) {
         return this.http.get('https://www.googleapis.com/drive/v3/files',
@@ -24,11 +24,10 @@ export class PollListService {
             headers: {Authorization: `Bearer ${accessToken}`},
             params: settings
           }
-        );
+        ).pipe(map(res => (res as any).files.map(file => file.id) as string[]));
+      } else {
+        return of(null);
       }
-    }), mergeAll(), map(result => {
-      const res: any = result;
-      return res.files.map(file => file.id) as string[];
-    }));
+    }), mergeAll());
   }
 }
