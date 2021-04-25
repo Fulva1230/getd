@@ -21,4 +21,8 @@ export class LoginDebugComponent implements OnInit {
   signin(): void {
     this.loginService.login();
   }
+
+  silentSignin(): void {
+    this.loginService.silentLogin();
+  }
 }

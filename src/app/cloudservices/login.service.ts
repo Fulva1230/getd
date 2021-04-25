@@ -21,6 +21,15 @@ export class LoginService {
     });
   }
 
+  silentLogin(): void {
+    this.userManager.signinSilent().then(
+      user => {
+        this.tokenSubject.next(user.access_token);
+        this.userManager.startSilentRenew();
+      }
+    );
+  }
+
   /**
    * @returns an observable giving access token or null when there is no access token or the accesstoken previous given is expired.
    * The observable will continuously emit new access token

@@ -4,6 +4,7 @@ import {PollPullerService} from '../../cloudservices/poll-puller.service';
 import {PollPosterService} from '../../cloudservices/poll-poster.service';
 import {Determine} from '../../containers/determine';
 import {DetermineRequest} from '../../containers/determine-request';
+import {DatetimeService} from '../../cloudservices/datetime.service';
 
 @Component({
   selector: 'app-debug-center',
@@ -17,6 +18,7 @@ export class DebugCenterComponent implements OnInit {
     private pollListService: PollListService,
     private pollpullerService: PollPullerService,
     private pollposterService: PollPosterService,
+    private datetimeService: DatetimeService
   ) {
   }
 
@@ -45,5 +47,9 @@ export class DebugCenterComponent implements OnInit {
     }, () => {
       console.log('complete');
     });
+  }
+
+  getDatetime(): void {
+    this.datetimeService.now().subscribe(res => console.log(res));
   }
 }
