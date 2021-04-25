@@ -4,7 +4,7 @@ import {LoginService} from '../../cloudservices/login.service';
 @Component({
   selector: 'app-login-debug',
   templateUrl: './login-debug.component.html',
-  styleUrls: ['./login-debug.component.css']
+  styleUrls: ['./login-debug.component.scss']
 })
 export class LoginDebugComponent implements OnInit {
   accessToken?: string;

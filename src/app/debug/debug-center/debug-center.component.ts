@@ -9,7 +9,7 @@ import {DatetimeService} from '../../cloudservices/datetime.service';
 @Component({
   selector: 'app-debug-center',
   templateUrl: './debug-center.component.html',
-  styleUrls: ['./debug-center.component.css']
+  styleUrls: ['./debug-center.component.scss']
 })
 export class DebugCenterComponent implements OnInit {
   files: string[] = [];

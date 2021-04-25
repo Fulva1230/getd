@@ -4,7 +4,7 @@ import {PollListService} from '../cloudservices/poll-list.service';
 @Component({
   selector: 'app-poll-list',
   templateUrl: './poll-list.component.html',
-  styleUrls: ['./poll-list.component.css']
+  styleUrls: ['./poll-list.component.scss']
 })
 export class PollListComponent implements OnInit {
   @Input() applierName: string;

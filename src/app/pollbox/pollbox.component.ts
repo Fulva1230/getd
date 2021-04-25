@@ -10,7 +10,7 @@ import {combineLatest} from 'rxjs';
 @Component({
   selector: 'app-pollbox',
   templateUrl: './pollbox.component.html',
-  styleUrls: ['./pollbox.component.css']
+  styleUrls: ['./pollbox.component.scss']
 })
 export class PollboxComponent implements OnInit {
   @Input() questionId: string;

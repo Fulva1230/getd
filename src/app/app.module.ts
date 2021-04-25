@@ -8,6 +8,9 @@ import {PollListComponent} from './poll-list/poll-list.component';
 import {LoginDebugComponent} from './debug/login-debug/login-debug.component';
 import {HttpClientModule} from '@angular/common/http';
 import { DebugCenterComponent } from './debug/debug-center/debug-center.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NbThemeModule, NbLayoutModule } from '@nebular/theme';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 @NgModule({
   declarations: [
@@ -21,6 +24,10 @@ import { DebugCenterComponent } from './debug/debug-center/debug-center.componen
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    NbThemeModule.forRoot({ name: 'dark' }),
+    NbLayoutModule,
+    NbEvaIconsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
