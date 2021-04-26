@@ -3,6 +3,7 @@
   <nb-card-body>
     <p *ngFor="let description of pollbox.question.descriptions">{{description}}</p>
     <button *ngFor="let selection of pollbox.question.selections" (click)="determine(selection)"
+            status="{{currentDetermine === selection ? 'success' : 'basic'}}"
             nbButton>{{selection}}</button>
   </nb-card-body>
 </nb-card>

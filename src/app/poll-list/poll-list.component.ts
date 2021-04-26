@@ -8,14 +8,17 @@ import {UserEventService} from '../user-event.service';
   styleUrls: ['./poll-list.component.scss']
 })
 export class PollListComponent implements OnInit {
-  @Input() applierName: string;
+  applierName: string;
   public questionIds: string[] = [];
   refreshFailed = false;
 
-  constructor(private pollListService: PollListService, private userEventService: UserEventService) {
+  constructor(
+    private pollListService: PollListService,
+    private userEventService: UserEventService) {
     this.userEventService.refreshPollListObs().subscribe(() => {
       this.refreshPollList();
     });
+    this.userEventService.updateUsernameObs().subscribe(name => this.applierName = name);
   }
 
   public refreshPollList(): void {

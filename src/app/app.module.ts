@@ -11,6 +11,7 @@ import {DebugCenterComponent} from './debug/debug-center/debug-center.component'
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NbThemeModule, NbLayoutModule, NbButtonModule, NbCardModule} from '@nebular/theme';
 import {NbEvaIconsModule} from '@nebular/eva-icons';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import {NbEvaIconsModule} from '@nebular/eva-icons';
     NbEvaIconsModule,
     NbButtonModule,
     NbCardModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

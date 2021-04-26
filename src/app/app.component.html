@@ -3,6 +3,7 @@
     <button nbButton (click)="login()">LOGIN</button>
     <span>{{loginHint}}</span>
     <button nbButton (click)="refreshPollList()">REFRESH</button>
+    <input [(ngModel)]="username" (input)="usernameInput()"/>
   </nb-layout-header>
 
   <nb-layout-column>

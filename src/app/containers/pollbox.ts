@@ -2,7 +2,7 @@ import {Determine} from './determine';
 import {Question} from './question';
 
 export class Pollbox {
-  determines: Determine[];
+  determines: Determine[] = [];
 
   constructor(public question: Question) {
   }
@@ -11,6 +11,7 @@ export class Pollbox {
     this.determines.sort(Determine.dateCompareFunction);
   }
 
+  // TODO It has wrong implementation
   latestApplies(): Determine[] {
     this.sortByDate();
     const cleanMap: Map<string, Determine> = new Map();
