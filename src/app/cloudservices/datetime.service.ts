@@ -13,7 +13,7 @@ export class DatetimeService {
 
   now(): Observable<Date> {
     return this.http
-      .get('http://worldclockapi.com/api/json/est/now', {})
+      .get('https://worldclockapi.com/api/json/est/now', {})
       .pipe(
         map(res => {
           return new Date((res as any).currentDateTime);
