@@ -7,19 +7,22 @@ export class Pollbox {
   constructor(public question: Question) {
   }
 
+  /**
+   * sort in accessding order by dates
+   */
   sortByDate(): void {
     this.determines.sort(Determine.dateCompareFunction);
   }
 
-  // TODO It has wrong implementation
   latestApplies(): Determine[] {
     this.sortByDate();
     const cleanMap: Map<string, Determine> = new Map();
     this.determines.forEach((determine) => {
       cleanMap.set(determine.applier, determine);
     });
-    const cleanedArray = Array.from(cleanMap.values());
-    cleanedArray.sort(Determine.dateCompareFunction);
-    return cleanedArray;
+    const newArr = Array.from(cleanMap.values());
+    newArr.sort(Determine.dateCompareFunction);
+    newArr.reverse();
+    return newArr;
   }
 }

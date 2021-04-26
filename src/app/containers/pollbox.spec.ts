@@ -20,7 +20,9 @@ describe('Pollbox', () => {
   it('latest applies', () => {
     const latestApplies = pollbox.latestApplies();
     expect(latestApplies.length).toBe(4);
-    expect(latestApplies[0].datetime.getTime()).toBeCloseTo( new Date(1999, 11, 2, 11, 33).getTime());
+    expect(latestApplies[0].applier).toBe('John');
+    expect(latestApplies[0].chosen).toBe('yes');
+    expect(latestApplies[0].datetime.getTime()).toBeCloseTo(new Date(1999, 12, 19, 12, 23).getTime());
     expect(latestApplies[1].applier).toBe('Alice');
   });
 });
