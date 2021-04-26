@@ -14,7 +14,8 @@ export class PollListService {
   }
 
   /**
-   * @returns an observable of poll-list, the obseravle should only return once and complete
+   * @returns an observable of poll-list, the obseravle should only return once and complete,
+   * if anything goes wrong, the return will be null or an error.
    */
   refresh(): Observable<string[] | null> {
     return this.loginService.accessToken().pipe(take(1), map(accessToken => {
@@ -24,7 +25,15 @@ export class PollListService {
             headers: {Authorization: `Bearer ${accessToken}`},
             params: settings
           }
-        ).pipe(map(res => (res as any).files.map(file => file.id) as string[]));
+        ).pipe(
+          map(res => {
+            if ((res as any).files) {
+              return (res as any).files.map(file => file.id) as string[];
+            } else {
+              return null;
+            }
+          })
+        );
       } else {
         return of(null);
       }

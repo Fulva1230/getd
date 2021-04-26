@@ -9,7 +9,7 @@ import {LoginDebugComponent} from './debug/login-debug/login-debug.component';
 import {HttpClientModule} from '@angular/common/http';
 import {DebugCenterComponent} from './debug/debug-center/debug-center.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {NbThemeModule, NbLayoutModule, NbButtonModule} from '@nebular/theme';
+import {NbThemeModule, NbLayoutModule, NbButtonModule, NbCardModule} from '@nebular/theme';
 import {NbEvaIconsModule} from '@nebular/eva-icons';
 
 @NgModule({
@@ -29,6 +29,7 @@ import {NbEvaIconsModule} from '@nebular/eva-icons';
     NbLayoutModule,
     NbEvaIconsModule,
     NbButtonModule,
+    NbCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

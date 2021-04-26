@@ -1,1 +1,6 @@
-<app-pollbox *ngFor="let questionId of questionIds" [questionId]="questionId" [applierName]="applierName"></app-pollbox>
+<div *ngIf="refreshFailed; else refreshSuccess">
+  <p>Refresh failed~</p>
+</div>
+<ng-template #refreshSuccess>
+  <app-pollbox *ngFor="let questionId of questionIds" [questionId]="questionId" [applierName]="applierName"></app-pollbox>
+</ng-template>

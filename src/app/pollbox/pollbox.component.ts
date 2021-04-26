@@ -6,6 +6,7 @@ import {DetermineRequest} from '../containers/determine-request';
 import {Determine} from '../containers/determine';
 import {DatetimeService} from '../cloudservices/datetime.service';
 import {combineLatest} from 'rxjs';
+import {Question} from '../containers/question';
 
 @Component({
   selector: 'app-pollbox',
@@ -15,7 +16,7 @@ import {combineLatest} from 'rxjs';
 export class PollboxComponent implements OnInit {
   @Input() questionId: string;
   @Input() applierName: string;
-  pollbox: Pollbox;
+  pollbox: Pollbox = new Pollbox(new Question('', '', [], []));
 
   constructor(
     private pollPuller: PollPullerService,

@@ -10,6 +10,7 @@ import {UserEventService} from '../user-event.service';
 export class PollListComponent implements OnInit {
   @Input() applierName: string;
   public questionIds: string[] = [];
+  refreshFailed = false;
 
   constructor(private pollListService: PollListService, private userEventService: UserEventService) {
     this.userEventService.refreshPollListObs().subscribe(() => {
@@ -19,11 +20,15 @@ export class PollListComponent implements OnInit {
 
   public refreshPollList(): void {
     this.pollListService.refresh().subscribe(questionIds => {
-      this.questionIds = questionIds;
+      if (questionIds) {
+        this.questionIds = questionIds;
+        this.refreshFailed = false;
+      } else {
+        this.refreshFailed = true;
+      }
     });
   }
 
   ngOnInit(): void {
-    this.refreshPollList();
   }
 }

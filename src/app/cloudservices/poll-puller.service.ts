@@ -33,8 +33,8 @@ export class PollPullerService {
           const resany = res as any;
           const {spreadsheetId, properties: {title}, sheets} = resany;
           const [{rowData: descriptions}, {rowData: selections}, {rowData: applies}] = sheets[0].data;
-          const descrptionsStrArr: string[] = descriptions[0].values.map(value => value.effectiveValue);
-          const selectionsStrArr: string[] = selections[0].values.map(value => value.effectiveValue);
+          const descrptionsStrArr: string[] = descriptions[0].values.map(value => value.effectiveValue.stringValue);
+          const selectionsStrArr: string[] = selections[0].values.map(value => value.effectiveValue.stringValue);
           const question = new Question(spreadsheetId, title, descrptionsStrArr, selectionsStrArr);
           const pollbox = new Pollbox(question);
           pollbox.determines = applies.map(apply => {

@@ -1,1 +1,8 @@
-<p>pollbox works!</p>
+<nb-card>
+  <nb-card-header>{{pollbox.question.title}}</nb-card-header>
+  <nb-card-body>
+    <p *ngFor="let description of pollbox.question.descriptions">{{description}}</p>
+    <button *ngFor="let selection of pollbox.question.selections" (click)="determine(selection)"
+            nbButton>{{selection}}</button>
+  </nb-card-body>
+</nb-card>
