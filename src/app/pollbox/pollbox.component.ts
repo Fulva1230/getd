@@ -15,7 +15,6 @@ import {Question} from '../containers/question';
 export class PollboxComponent implements OnInit, OnChanges {
   @Input() questionId: string;
   @Input() applierName: string;
-  // TODO this part may be improved
   currentDetermine: string;
   pollbox: Pollbox = new Pollbox(new Question('', '', [], []));
 
