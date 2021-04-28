@@ -13,10 +13,12 @@ export class DatetimeService {
 
   now(): Observable<Date> {
     return this.http
-      .get('https://worldclockapi.com/api/json/est/now', {})
+      .get('https://servicemanagement.googleapis.com/$discovery/rest?version=v1', {
+        observe: 'response'
+      })
       .pipe(
         map(res => {
-          return new Date((res as any).currentDateTime);
+          return new Date(res.headers.get('date'));
         })
       );
   }
