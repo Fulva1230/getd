@@ -42,7 +42,8 @@ export class AppComponent implements OnInit {
     this.loginService.login();
   }
 
-  refreshPollList(): void {
+  refresh(): void {
+    this.userEventService.refresh();
     this.pollListSerivice.refresh().subscribe(pollList => {
       if (pollList) {
         this.toastService.success('Successfully got the poll list', 'SUCCESS');

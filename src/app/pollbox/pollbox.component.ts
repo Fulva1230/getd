@@ -6,6 +6,8 @@ import {DetermineRequest} from '../containers/determine-request';
 import {Determine} from '../containers/determine';
 import {DatetimeService} from '../cloudservices/datetime.service';
 import {Question} from '../containers/question';
+import {UserEventService} from '../user-event.service';
+import {addWarning} from '@angular-devkit/build-angular/src/utils/webpack-diagnostics';
 
 @Component({
   selector: 'app-pollbox',
@@ -21,11 +23,15 @@ export class PollboxComponent implements OnInit, OnChanges {
   constructor(
     private pollPuller: PollPullerService,
     private pollPoster: PollPosterService,
-    private datetimeProvider: DatetimeService) {
+    private datetimeProvider: DatetimeService,
+    private userEventService: UserEventService) {
   }
 
   async ngOnInit(): Promise<void> {
     await this.refreshPoll();
+    this.userEventService.refreshObs().subscribe(async () => {
+      await this.refreshPoll();
+    });
   }
 
   async refreshPoll(): Promise<void> {

@@ -5,19 +5,19 @@ import {Observable, ReplaySubject, Subject} from 'rxjs';
   providedIn: 'root'
 })
 export class UserEventService {
-  private pollListRefresh = new Subject<null>();
+  private refreshObserver = new Subject<null>();
   private usernameSet = new ReplaySubject<string>();
 
   constructor() {
     this.usernameSet.next(localStorage.username);
   }
 
-  refreshPollList(): void {
-    this.pollListRefresh.next(null);
+  refresh(): void {
+    this.refreshObserver.next(null);
   }
 
-  refreshPollListObs(): Observable<null> {
-    return this.pollListRefresh;
+  refreshObs(): Observable<null> {
+    return this.refreshObserver;
   }
 
   updateUsername(name: string): void {
