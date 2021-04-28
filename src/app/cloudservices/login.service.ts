@@ -18,6 +18,8 @@ export class LoginService {
     this.userManager.signinPopup().then(user => {
       this.tokenSubject.next(user.access_token);
       this.userManager.startSilentRenew();
+    }).catch(err => {
+      this.tokenSubject.next(null);
     });
   }
 

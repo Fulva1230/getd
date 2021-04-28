@@ -9,9 +9,9 @@ import {take, map, mergeAll} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class PollListService {
-  private pollListObserver = new ReplaySubject<string[] | null>(1);
+  private pollListObserver = new ReplaySubject<string[]>(1);
 
-  get pollList(): Observable<string[] | null> {
+  get pollList(): Observable<string[]> {
     return this.pollListObserver;
   }
 

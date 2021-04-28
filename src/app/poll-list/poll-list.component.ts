@@ -10,28 +10,16 @@ import {UserEventService} from '../user-event.service';
 export class PollListComponent implements OnInit {
   applierName: string;
   public questionIds: string[] = [];
-  refreshFailed = false;
 
   constructor(
     private pollListService: PollListService,
     private userEventService: UserEventService) {
-    this.userEventService.refreshPollListObs().subscribe(() => {
-      this.refreshPollList();
-    });
-    this.userEventService.updateUsernameObs().subscribe(name => this.applierName = name);
-  }
-
-  public refreshPollList(): void {
-    this.pollListService.refresh().subscribe(questionIds => {
-      if (questionIds) {
-        this.questionIds = questionIds;
-        this.refreshFailed = false;
-      } else {
-        this.refreshFailed = true;
-      }
-    });
+    this.userEventService.updateUsernameObs().subscribe(applierName => this.applierName = applierName);
   }
 
   ngOnInit(): void {
+    this.pollListService.pollList.subscribe(questionIds => {
+      this.questionIds = questionIds;
+    });
   }
 }
