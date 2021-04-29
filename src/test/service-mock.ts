@@ -5,10 +5,13 @@ import {PollPullerService} from '../app/cloudservices/poll-puller.service';
 import {PollPosterService} from '../app/cloudservices/poll-poster.service';
 import {Pollbox} from '../app/containers/pollbox';
 import {DatetimeService} from '../app/cloudservices/datetime.service';
+import {UserEventService} from '../app/user-event.service';
 
 export const mockPollList = () => {
-  const pollListServiceSpy = jasmine.createSpyObj(['refresh']);
+  const pollListSubject = new ReplaySubject<string[]>(1);
+  const pollListServiceSpy = jasmine.createSpyObj(['refresh'], {pollList: pollListSubject});
   pollListServiceSpy.refresh.and.callFake(() => {
+    pollListSubject.next(createFakePollList());
     return of(createFakePollList());
   });
   return pollListServiceSpy;
@@ -46,4 +49,8 @@ export const mockDateTime = () => {
     return of(new Date());
   });
   return datetimeSpy;
+};
+
+export const mockUserEventService = () => {
+  return new UserEventService();
 };

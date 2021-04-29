@@ -2,26 +2,32 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {PollListComponent} from './poll-list.component';
 import {PollListService} from '../cloudservices/poll-list.service';
-import {mockPollList, mockPollPullerAndPoster} from '../../test/service-mock';
+import {mockDateTime, mockPollList, mockPollPullerAndPoster} from '../../test/service-mock';
 import {PollboxComponent} from '../pollbox/pollbox.component';
 import {PollPullerService} from '../cloudservices/poll-puller.service';
 import {PollPosterService} from '../cloudservices/poll-poster.service';
+import {UserEventService} from '../user-event.service';
+import {DatetimeService} from '../cloudservices/datetime.service';
 
 describe('PollListComponent', () => {
   let component: PollListComponent;
   let fixture: ComponentFixture<PollListComponent>;
+  let pollListService: PollListService;
 
   beforeEach(async () => {
     const {pollPullerSpy, pollPosterSpy} = mockPollPullerAndPoster();
+    pollListService = mockPollList();
     await TestBed.configureTestingModule({
       declarations: [
         PollListComponent,
         PollboxComponent
       ],
       providers: [
-        {provide: PollListService, useValue: mockPollList()},
+        {provide: PollListService, useValue: pollListService},
         {provide: PollPullerService, useValue: pollPullerSpy},
         {provide: PollPosterService, useValue: pollPosterSpy},
+        {provide: UserEventService, useValue: new UserEventService()},
+        {provide: DatetimeService, useValue: mockDateTime()}
       ]
     })
       .compileComponents();
@@ -31,6 +37,7 @@ describe('PollListComponent', () => {
     fixture = TestBed.createComponent(PollListComponent);
     component = fixture.componentInstance;
     component.applierName = 'stone';
+    pollListService.refresh();
     fixture.detectChanges();
   });
 

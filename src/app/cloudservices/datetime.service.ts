@@ -13,7 +13,7 @@ export class DatetimeService {
 
   now(): Observable<Date> {
     return this.http
-      .get('https://servicemanagement.googleapis.com/$discovery/rest?version=v1', {
+      .get('https://api.agify.io/?name=bella', {
         observe: 'response'
       })
       .pipe(
