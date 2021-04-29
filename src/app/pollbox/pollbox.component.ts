@@ -8,6 +8,7 @@ import {DatetimeService} from '../cloudservices/datetime.service';
 import {Question} from '../containers/question';
 import {UserEventService} from '../user-event.service';
 import {addWarning} from '@angular-devkit/build-angular/src/utils/webpack-diagnostics';
+import {ToastNotifierService} from '../toast-notifier.service';
 
 @Component({
   selector: 'app-pollbox',
@@ -19,12 +20,15 @@ export class PollboxComponent implements OnInit, OnChanges {
   @Input() applierName: string;
   currentDetermine: string;
   pollbox: Pollbox = new Pollbox(new Question('', '', [], []));
+  isDeterminePosting = false;
 
   constructor(
     private pollPuller: PollPullerService,
     private pollPoster: PollPosterService,
     private datetimeProvider: DatetimeService,
-    private userEventService: UserEventService) {
+    private userEventService: UserEventService,
+    private toastNotifier: ToastNotifierService
+  ) {
   }
 
   async ngOnInit(): Promise<void> {
@@ -45,15 +49,23 @@ export class PollboxComponent implements OnInit, OnChanges {
   }
 
   determine(select: string): void {
+    this.isDeterminePosting = true;
     this.datetimeProvider.now().subscribe((date) => {
-      this.pollPoster
-        .post(new DetermineRequest(new Determine(this.applierName, this.questionId, select, date)))
-        .subscribe(() => {
-        }, _ => {
-        }, () => {
-          this.refreshPoll().then();
-        });
-    });
+        this.pollPoster
+          .post(new DetermineRequest(new Determine(this.applierName, this.questionId, select, date)))
+          .subscribe(() => {
+          }, _ => {
+            this.toastNotifier.fail('Failed to post the choice');
+            this.isDeterminePosting = false;
+          }, () => {
+            this.toastNotifier.success('Successfully posted the choice');
+            this.isDeterminePosting = false;
+            this.refreshPoll().then();
+          });
+      }, () => {
+        this.isDeterminePosting = false;
+      }
+    );
   }
 
   private updateCurrentDetermine(): void {

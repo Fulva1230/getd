@@ -2,12 +2,13 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {PollListComponent} from './poll-list.component';
 import {PollListService} from '../cloudservices/poll-list.service';
-import {mockDateTime, mockPollList, mockPollPullerAndPoster} from '../../test/service-mock';
+import {mockDateTime, mockPollList, mockPollPullerAndPoster, mockToastNotifier} from '../../test/service-mock';
 import {PollboxComponent} from '../pollbox/pollbox.component';
 import {PollPullerService} from '../cloudservices/poll-puller.service';
 import {PollPosterService} from '../cloudservices/poll-poster.service';
 import {UserEventService} from '../user-event.service';
 import {DatetimeService} from '../cloudservices/datetime.service';
+import {ToastNotifierService} from '../toast-notifier.service';
 
 describe('PollListComponent', () => {
   let component: PollListComponent;
@@ -27,7 +28,8 @@ describe('PollListComponent', () => {
         {provide: PollPullerService, useValue: pollPullerSpy},
         {provide: PollPosterService, useValue: pollPosterSpy},
         {provide: UserEventService, useValue: new UserEventService()},
-        {provide: DatetimeService, useValue: mockDateTime()}
+        {provide: DatetimeService, useValue: mockDateTime()},
+        {provide: ToastNotifierService, useValue: mockToastNotifier()}
       ]
     })
       .compileComponents();

@@ -6,6 +6,7 @@ import {PollPosterService} from '../app/cloudservices/poll-poster.service';
 import {Pollbox} from '../app/containers/pollbox';
 import {DatetimeService} from '../app/cloudservices/datetime.service';
 import {UserEventService} from '../app/user-event.service';
+import {ToastNotifierService} from '../app/toast-notifier.service';
 
 export const mockPollList = () => {
   const pollListSubject = new ReplaySubject<string[]>(1);
@@ -54,3 +55,8 @@ export const mockDateTime = () => {
 export const mockUserEventService = () => {
   return new UserEventService();
 };
+
+export const mockToastNotifier = () => {
+  return jasmine.createSpyObj(['success', 'fail']) as jasmine.SpyObj<ToastNotifierService>;
+};
+

@@ -1,9 +1,13 @@
 <nb-card>
   <nb-card-header>{{pollbox.question.title}}</nb-card-header>
   <nb-card-body>
-    <p *ngFor="let description of pollbox.question.descriptions">{{description}}</p>
-    <button *ngFor="let selection of pollbox.question.selections" (click)="determine(selection)"
-            status="{{currentDetermine === selection ? 'success' : 'basic'}}"
-            nbButton>{{selection}}</button>
+    <div [nbSpinner]="isDeterminePosting">
+      <p *ngFor="let description of pollbox.question.descriptions">{{description}}</p>
+      <button *ngFor="let selection of pollbox.question.selections" (click)="determine(selection)"
+              status="{{currentDetermine === selection ? 'success' : 'basic'}}"
+              nbButton>{{selection}}</button>
+    </div>
+    <ng-template #notPosting>
+    </ng-template>
   </nb-card-body>
 </nb-card>

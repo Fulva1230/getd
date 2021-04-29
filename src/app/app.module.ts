@@ -9,7 +9,7 @@ import {LoginDebugComponent} from './debug/login-debug/login-debug.component';
 import {HttpClientModule} from '@angular/common/http';
 import {DebugCenterComponent} from './debug/debug-center/debug-center.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {NbThemeModule, NbLayoutModule, NbButtonModule, NbCardModule, NbToastrModule} from '@nebular/theme';
+import {NbThemeModule, NbLayoutModule, NbButtonModule, NbCardModule, NbToastrModule, NbSpinnerModule} from '@nebular/theme';
 import {NbEvaIconsModule} from '@nebular/eva-icons';
 import {FormsModule} from '@angular/forms';
 
@@ -33,6 +33,7 @@ import {FormsModule} from '@angular/forms';
     NbCardModule,
     FormsModule,
     NbToastrModule.forRoot({}),
+    NbSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

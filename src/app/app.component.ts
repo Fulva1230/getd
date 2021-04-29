@@ -4,6 +4,7 @@ import {LoginService} from './cloudservices/login.service';
 import {skip, take} from 'rxjs/operators';
 import {PollListService} from './cloudservices/poll-list.service';
 import {NbToastrService} from '@nebular/theme';
+import {ToastNotifierService} from './toast-notifier.service';
 
 @Component({
   selector: 'app-root',
@@ -18,17 +19,16 @@ export class AppComponent implements OnInit {
     private loginService: LoginService,
     private userEventService: UserEventService,
     private pollListSerivice: PollListService,
-    private toastService: NbToastrService
+    private toastNotifier: ToastNotifierService
   ) {
-
   }
 
   ngOnInit(): void {
     this.loginService.accessToken().pipe(skip(1)).subscribe(res => {
       if (res) {
-        this.toastService.success('Successfully login', 'SUCCESS');
+        this.toastNotifier.success('Successfully login');
       } else {
-        this.toastService.warning('Failed to login', 'FAILURE');
+        this.toastNotifier.fail('Failed to login');
       }
     });
     this.userEventService.updateUsernameObs().pipe(take(1)).subscribe(name => this.username = name);
@@ -46,9 +46,9 @@ export class AppComponent implements OnInit {
     this.userEventService.refresh();
     this.pollListSerivice.refresh().subscribe(pollList => {
       if (pollList) {
-        this.toastService.success('Successfully got the poll list', 'SUCCESS');
+        this.toastNotifier.success('Successfully got the poll list');
       } else {
-        this.toastService.warning('Failed to get the poll list', 'FAILURE');
+        this.toastNotifier.fail('Failed to get the poll list');
       }
     });
   }
