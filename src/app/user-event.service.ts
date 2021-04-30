@@ -6,7 +6,7 @@ import {Observable, ReplaySubject, Subject} from 'rxjs';
 })
 export class UserEventService {
   private refreshObserver = new Subject<null>();
-  private usernameSet = new ReplaySubject<string>();
+  private usernameSet = new ReplaySubject<string>(1);
 
   constructor() {
     this.usernameSet.next(localStorage.username);

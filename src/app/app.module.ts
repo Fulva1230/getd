@@ -12,6 +12,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NbThemeModule, NbLayoutModule, NbButtonModule, NbCardModule, NbToastrModule, NbSpinnerModule} from '@nebular/theme';
 import {NbEvaIconsModule} from '@nebular/eva-icons';
 import {FormsModule} from '@angular/forms';
+import { PollboxTableComponent } from './report/pollbox-table/pollbox-table.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import {FormsModule} from '@angular/forms';
     PollListComponent,
     LoginDebugComponent,
     DebugCenterComponent,
+    PollboxTableComponent,
   ],
   imports: [
     BrowserModule,
