@@ -13,6 +13,8 @@ import {NbThemeModule, NbLayoutModule, NbButtonModule, NbCardModule, NbToastrMod
 import {NbEvaIconsModule} from '@nebular/eva-icons';
 import {FormsModule} from '@angular/forms';
 import { PollboxTableComponent } from './report/pollbox-table/pollbox-table.component';
+import { LoginCallbackComponent } from './login/login-callback/login-callback.component';
+import { SilentLoginCallbackComponent } from './login/silent-login-callback/silent-login-callback.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { PollboxTableComponent } from './report/pollbox-table/pollbox-table.comp
     LoginDebugComponent,
     DebugCenterComponent,
     PollboxTableComponent,
+    LoginCallbackComponent,
+    SilentLoginCallbackComponent,
   ],
   imports: [
     BrowserModule,
