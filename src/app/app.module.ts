@@ -9,12 +9,24 @@ import {LoginDebugComponent} from './debug/login-debug/login-debug.component';
 import {HttpClientModule} from '@angular/common/http';
 import {DebugCenterComponent} from './debug/debug-center/debug-center.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {NbThemeModule, NbLayoutModule, NbButtonModule, NbCardModule, NbToastrModule, NbSpinnerModule} from '@nebular/theme';
+import {
+  NbThemeModule,
+  NbLayoutModule,
+  NbButtonModule,
+  NbCardModule,
+  NbToastrModule,
+  NbSpinnerModule
+} from '@nebular/theme';
 import {NbEvaIconsModule} from '@nebular/eva-icons';
 import {FormsModule} from '@angular/forms';
-import { PollboxTableComponent } from './report/pollbox-table/pollbox-table.component';
-import { LoginCallbackComponent } from './login/login-callback/login-callback.component';
-import { SilentLoginCallbackComponent } from './login/silent-login-callback/silent-login-callback.component';
+import {PollboxTableComponent} from './report/pollbox-table/pollbox-table.component';
+import {LoginCallbackComponent} from './login/login-callback/login-callback.component';
+import {SilentLoginCallbackComponent} from './login/silent-login-callback/silent-login-callback.component';
+import {NgxDatatableModule} from "@swimlane/ngx-datatable";
+import { DebugTableComponent } from './debug/debug-table/debug-table.component';
+import { DeterminesChartComponent } from './report/determines-chart/determines-chart.component';
+import {NgxChartsModule} from "@swimlane/ngx-charts";
+import { DebugDeterminesChartComponent } from './debug/debug-determines-chart/debug-determines-chart.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +38,9 @@ import { SilentLoginCallbackComponent } from './login/silent-login-callback/sile
     PollboxTableComponent,
     LoginCallbackComponent,
     SilentLoginCallbackComponent,
+    DebugTableComponent,
+    DeterminesChartComponent,
+    DebugDeterminesChartComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,6 +55,8 @@ import { SilentLoginCallbackComponent } from './login/silent-login-callback/sile
     FormsModule,
     NbToastrModule.forRoot({}),
     NbSpinnerModule,
+    NgxDatatableModule,
+    NgxChartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

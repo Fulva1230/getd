@@ -1,8 +1,13 @@
 @import 'themes';
 
 @import '~@nebular/theme/styles/globals';
+@import 'app/report/determines-chart/dark-theme';
 
 @include nb-install() {
   @include nb-theme-global();
-};
+}
+
+@import '~@swimlane/ngx-datatable/themes/dark.scss';
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+
 /* You can add global styles to this file, and also import other style files */
