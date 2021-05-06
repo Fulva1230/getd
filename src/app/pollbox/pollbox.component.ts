@@ -41,8 +41,12 @@ export class PollboxComponent implements OnInit, OnChanges {
   async refreshPoll(): Promise<void> {
     return new Promise((res) => {
       this.pollPuller.pull(this.questionId).subscribe((pollBox) => {
-        this.pollbox = pollBox;
-        this.updateCurrentDetermine();
+        if (pollBox.status === 'SUCCESS') {
+          this.pollbox = pollBox.pollBox;
+          this.updateCurrentDetermine();
+        } else {
+          this.toastNotifier.fail(`Failed to get pollBox ${this.questionId}`);
+        }
         res();
       });
     });

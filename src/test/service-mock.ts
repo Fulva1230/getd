@@ -25,17 +25,17 @@ export const mockPollPullerAndPoster = () => {
   pollPullerSpy.pull.and.callFake((questionId) => {
     const optionalPollBox = pollboxmap.get(questionId);
     if (optionalPollBox) {
-      return of(optionalPollBox);
+      return of({status: 'SUCCESS', pollBox: optionalPollBox});
     } else {
       const fakePollBox = createFakePollbox();
       pollboxmap.set(questionId, fakePollBox);
-      return of(fakePollBox);
+      return of({status: 'SUCCESS', pollBox: optionalPollBox});
     }
   });
   pollPosterSpy.post.and.callFake((request) => {
     const doneSubject = new ReplaySubject<void>(1);
     pollPullerSpy.pull(request.determine.questionId).subscribe((pollbox) => {
-      pollbox.determines.push(request.determine);
+      pollbox.pollBox.determines.push(request.determine);
       request.status = 'SUCCESS';
       doneSubject.next(undefined);
     });

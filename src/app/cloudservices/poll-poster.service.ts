@@ -5,6 +5,8 @@ import {LoginService} from './login.service';
 import {map, mergeAll, take} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,6 +14,7 @@ export class PollPosterService {
   constructor(private loginService: LoginService, private http: HttpClient) {
   }
 
+  // TODO change implementation to make it post when subscribed
   /**
    *
    *
