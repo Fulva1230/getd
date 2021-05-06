@@ -2,7 +2,6 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import {Pollbox} from '../containers/pollbox';
 import {PollPullerService} from '../cloudservices/poll-puller.service';
 import {PollPosterService} from '../cloudservices/poll-poster.service';
-import {DetermineRequest} from '../containers/determine-request';
 import {Determine} from '../containers/determine';
 import {DatetimeService} from '../cloudservices/datetime.service';
 import {Question} from '../containers/question';
@@ -56,7 +55,7 @@ export class PollboxComponent implements OnInit, OnChanges {
     this.isDeterminePosting = true;
     this.datetimeProvider.now().subscribe((date) => {
         this.pollPoster
-          .post(new DetermineRequest(new Determine(this.applierName, this.questionId, select, date)))
+          .post(new Determine(this.applierName, this.questionId, select, date))
           .subscribe(() => {
           }, _ => {
             this.toastNotifier.fail('Failed to post the choice');

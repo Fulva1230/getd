@@ -34,9 +34,8 @@ export const mockPollPullerAndPoster = () => {
   });
   pollPosterSpy.post.and.callFake((request) => {
     const doneSubject = new ReplaySubject<void>(1);
-    pollPullerSpy.pull(request.determine.questionId).subscribe((pollbox) => {
-      pollbox.pollBox.determines.push(request.determine);
-      request.status = 'SUCCESS';
+    pollPullerSpy.pull(request.questionId).subscribe((pollbox) => {
+      pollbox.pollBox.determines.push(request);
       doneSubject.next(undefined);
     });
     return doneSubject;

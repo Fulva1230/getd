@@ -3,7 +3,6 @@ import {PollListService} from '../../cloudservices/poll-list.service';
 import {PollPullerService} from '../../cloudservices/poll-puller.service';
 import {PollPosterService} from '../../cloudservices/poll-poster.service';
 import {Determine} from '../../containers/determine';
-import {DetermineRequest} from '../../containers/determine-request';
 import {DatetimeService} from '../../cloudservices/datetime.service';
 
 @Component({
@@ -41,7 +40,7 @@ export class DebugCenterComponent implements OnInit {
 
   postpollbox(): void {
     const determine = new Determine('nick', '1aVNKjj0RhBc1GMr6mj1wXZO3eUDhh2rTvVynAsc5rgU', 'sss', new Date());
-    this.pollposterService.post(new DetermineRequest(determine)).subscribe(res => {
+    this.pollposterService.post(determine).subscribe(res => {
     }, err => {
       console.log(err);
     }, () => {
