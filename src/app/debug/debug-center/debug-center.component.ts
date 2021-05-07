@@ -4,6 +4,8 @@ import {PollPullerService} from '../../cloudservices/poll-puller.service';
 import {PollPosterService} from '../../cloudservices/poll-poster.service';
 import {Determine} from '../../containers/determine';
 import {DatetimeService} from '../../cloudservices/datetime.service';
+import {PollBoxDeliveryService} from '../../data-services/poll-box-delivery.service';
+import {first} from 'rxjs/operators';
 
 @Component({
   selector: 'app-debug-center',
@@ -17,7 +19,8 @@ export class DebugCenterComponent implements OnInit {
     private pollListService: PollListService,
     private pollpullerService: PollPullerService,
     private pollposterService: PollPosterService,
-    private datetimeService: DatetimeService
+    private datetimeService: DatetimeService,
+    private pollBoxDeliveryService: PollBoxDeliveryService
   ) {
   }
 
@@ -50,5 +53,27 @@ export class DebugCenterComponent implements OnInit {
 
   getDatetime(): void {
     this.datetimeService.now().subscribe(res => console.log(res));
+  }
+
+  checkPollPullDelivery(): void {
+    this.pollBoxDeliveryService.pollBoxObser('1aVNKjj0RhBc1GMr6mj1wXZO3eUDhh2rTvVynAsc5rgU').pipe(first()).subscribe(
+      pollbox => {
+        console.log(pollbox);
+      }
+    );
+    this.pollBoxDeliveryService.request(
+      {type: 'poll', questionId: '1aVNKjj0RhBc1GMr6mj1wXZO3eUDhh2rTvVynAsc5rgU'}
+    ).subscribe(res => {
+      console.log(res);
+    });
+  }
+
+  checkPollPostDelivery(): void {
+    const determine = new Determine('nick', '1aVNKjj0RhBc1GMr6mj1wXZO3eUDhh2rTvVynAsc5rgU', 'sss', new Date());
+    this.pollBoxDeliveryService.request(
+      {type: 'post', determine}
+    ).subscribe(res => {
+      console.log(res);
+    });
   }
 }

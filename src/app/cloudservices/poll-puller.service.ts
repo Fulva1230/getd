@@ -52,7 +52,7 @@ export class PollPullerService {
             return {status: 'SUCCESS', pollBox: pollbox};
           }));
         } else {
-          return of({status: 'SUCCESS' as const});
+          return of({status: 'FAIL' as const});
         }
       }),
       mergeAll(),

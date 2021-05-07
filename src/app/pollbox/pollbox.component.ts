@@ -10,6 +10,7 @@ import {addWarning} from '@angular-devkit/build-angular/src/utils/webpack-diagno
 import {ToastNotifierService} from '../toast-notifier.service';
 import {catchError, map, mergeAll} from 'rxjs/operators';
 import {of} from 'rxjs';
+import {PollBoxDeliveryService} from '../data-services/poll-box-delivery.service';
 
 @Component({
   selector: 'app-pollbox',
@@ -24,15 +25,19 @@ export class PollboxComponent implements OnInit, OnChanges {
   isDeterminePosting = false;
 
   constructor(
-    private pollPuller: PollPullerService,
     private pollPoster: PollPosterService,
     private datetimeProvider: DatetimeService,
     private userEventService: UserEventService,
-    private toastNotifier: ToastNotifierService
+    private toastNotifier: ToastNotifierService,
+    private pollBoxDeliveryService: PollBoxDeliveryService
   ) {
   }
 
   async ngOnInit(): Promise<void> {
+    this.pollBoxDeliveryService.pollBoxObser(this.questionId).subscribe(pollBox => {
+      this.pollbox = pollBox;
+      this.updateCurrentDetermine();
+    });
     await this.refreshPoll();
     this.userEventService.refreshObs().subscribe(async () => {
       await this.refreshPoll();
@@ -41,15 +46,15 @@ export class PollboxComponent implements OnInit, OnChanges {
 
   async refreshPoll(): Promise<void> {
     return new Promise((res) => {
-      this.pollPuller.pull(this.questionId).subscribe((pollBox) => {
-        if (pollBox.status === 'SUCCESS') {
-          this.pollbox = pollBox.pollBox;
-          this.updateCurrentDetermine();
-        } else {
-          this.toastNotifier.fail(`Failed to get pollBox ${this.questionId}`);
-        }
-        res();
-      });
+      this.pollBoxDeliveryService
+        .request({type: 'poll', questionId: this.questionId})
+        .subscribe(pollRes => {
+          switch (pollRes.status) {
+            case 'FAIL':
+              this.toastNotifier.fail(`Failed to get pollBox ${this.questionId}`);
+          }
+          res();
+        });
     });
   }
 
@@ -57,15 +62,15 @@ export class PollboxComponent implements OnInit, OnChanges {
     this.isDeterminePosting = true;
     this.datetimeProvider.now().pipe(
       map(date => {
-        return this.pollPoster.post(new Determine(this.applierName, this.questionId, select, date));
+        return this.pollBoxDeliveryService
+          .request({type: 'post', determine: new Determine(this.applierName, this.questionId, select, date)});
       }),
       mergeAll(),
       catchError(err => {
-        this.isDeterminePosting = false;
         return of({status: 'FAIL'} as const);
       })
-    ).subscribe(res => {
-      switch (res.status) {
+    ).subscribe(postRes => {
+      switch (postRes.status) {
         case 'SUCCESS':
           this.toastNotifier.success('Successfully posted the choice');
           this.isDeterminePosting = false;

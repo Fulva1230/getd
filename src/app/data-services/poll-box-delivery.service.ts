@@ -55,9 +55,9 @@ export class PollBoxDeliveryService {
             switch (res.status) {
               case 'SUCCESS':
                 this.pollBoxSubject(pollBoxReq.questionId).next(res.pollBox);
-                return {req: pollBoxReq, status: 'SUCCESS'};
+                return {status: 'SUCCESS', req: pollBoxReq};
               case 'FAIL':
-                return {req: pollBoxReq, status: 'FAIL'};
+                return {status: 'FAIL', req: pollBoxReq};
             }
           }));
       case 'post':
