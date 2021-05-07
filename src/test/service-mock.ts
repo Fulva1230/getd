@@ -1,4 +1,4 @@
-import {of, ReplaySubject} from 'rxjs';
+import {of, ReplaySubject, Subject} from 'rxjs';
 import {createFakePollbox, createFakePollList} from './sample-data';
 import {PollboxComponent} from '../app/pollbox/pollbox.component';
 import {PollPullerService} from '../app/cloudservices/poll-puller.service';
@@ -8,6 +8,7 @@ import {DatetimeService} from '../app/cloudservices/datetime.service';
 import {UserEventService} from '../app/user-event.service';
 import {ToastNotifierService} from '../app/toast-notifier.service';
 import {map} from 'rxjs/operators';
+import {PollBoxDeliveryService} from '../app/data-services/poll-box-delivery.service';
 
 export const mockPollList = () => {
   const pollListSubject = new ReplaySubject<string[]>(1);
@@ -57,4 +58,10 @@ export const mockUserEventService = () => {
 export const mockToastNotifier = () => {
   return jasmine.createSpyObj(['success', 'fail']) as jasmine.SpyObj<ToastNotifierService>;
 };
+
+export function mockPollBoxDeliveryService(): jasmine.SpyObj<PollBoxDeliveryService> {
+  const {pollPullerSpy, pollPosterSpy} = mockPollPullerAndPoster();
+  const spyObj = new PollBoxDeliveryService(pollPullerSpy, pollPosterSpy);
+  return spyOnAllFunctions(spyObj);
+}
 

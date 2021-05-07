@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {Pollbox} from "../../containers/pollbox";
+import {Pollbox} from '../../containers/pollbox';
 
 @Component({
   selector: 'app-determines-chart',

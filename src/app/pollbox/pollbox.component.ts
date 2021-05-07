@@ -25,7 +25,6 @@ export class PollboxComponent implements OnInit, OnChanges {
   isDeterminePosting = false;
 
   constructor(
-    private pollPoster: PollPosterService,
     private datetimeProvider: DatetimeService,
     private userEventService: UserEventService,
     private toastNotifier: ToastNotifierService,

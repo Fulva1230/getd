@@ -25,6 +25,7 @@
     "@swimlane/ngx-charts": "^17.0.1",
     "@swimlane/ngx-datatable": "^19.0.0",
     "eva-icons": "^1.1.2",
+    "immutable": "^4.0.0-rc.12",
     "oidc-client": "^1.11.5",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",

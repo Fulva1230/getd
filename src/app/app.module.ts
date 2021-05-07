@@ -15,18 +15,19 @@ import {
   NbButtonModule,
   NbCardModule,
   NbToastrModule,
-  NbSpinnerModule
+  NbSpinnerModule, NbDatepickerModule, NbInputModule, NbTimepickerModule
 } from '@nebular/theme';
 import {NbEvaIconsModule} from '@nebular/eva-icons';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {PollboxTableComponent} from './report/pollbox-table/pollbox-table.component';
 import {LoginCallbackComponent} from './login/login-callback/login-callback.component';
 import {SilentLoginCallbackComponent} from './login/silent-login-callback/silent-login-callback.component';
-import {NgxDatatableModule} from "@swimlane/ngx-datatable";
-import { DebugTableComponent } from './debug/debug-table/debug-table.component';
-import { DeterminesChartComponent } from './report/determines-chart/determines-chart.component';
-import {NgxChartsModule} from "@swimlane/ngx-charts";
-import { DebugDeterminesChartComponent } from './debug/debug-determines-chart/debug-determines-chart.component';
+import {NgxDatatableModule} from '@swimlane/ngx-datatable';
+import {DebugTableComponent} from './debug/debug-table/debug-table.component';
+import {DeterminesChartComponent} from './report/determines-chart/determines-chart.component';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
+import {DebugDeterminesChartComponent} from './debug/debug-determines-chart/debug-determines-chart.component';
+import {ReportMainComponent} from './report/report-main/report-main.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { DebugDeterminesChartComponent } from './debug/debug-determines-chart/de
     DebugTableComponent,
     DeterminesChartComponent,
     DebugDeterminesChartComponent,
+    ReportMainComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,6 +59,10 @@ import { DebugDeterminesChartComponent } from './debug/debug-determines-chart/de
     NbSpinnerModule,
     NgxDatatableModule,
     NgxChartsModule,
+    NbInputModule,
+    NbDatepickerModule.forRoot(),
+    NbTimepickerModule.forRoot(),
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

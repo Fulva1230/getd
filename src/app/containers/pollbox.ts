@@ -25,4 +25,15 @@ export class Pollbox {
     newArr.reverse();
     return newArr;
   }
+
+  report(deadline: Date): Pollbox {
+    const copyPollbox = new Pollbox(this.question);
+    for (const determine of this.determines) {
+      if (determine.datetime.getTime() < deadline.getTime()) {
+        copyPollbox.determines.push(determine);
+      }
+    }
+    copyPollbox.determines = copyPollbox.latestApplies();
+    return copyPollbox;
+  }
 }

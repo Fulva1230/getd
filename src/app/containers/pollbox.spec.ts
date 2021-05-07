@@ -25,4 +25,17 @@ describe('Pollbox', () => {
     expect(latestApplies[0].datetime.getTime()).toBeCloseTo(new Date(1999, 12, 19, 12, 23).getTime());
     expect(latestApplies[1].applier).toBe('Alice');
   });
+
+  it('test report 1', () => {
+    const reportPollBox = pollbox.report(new Date(1999, 11, 25, 11, 33));
+    expect(reportPollBox.determines.length).toBe(2);
+    expect(reportPollBox.determines[0].applier).toBe('Alice');
+    expect(reportPollBox.determines[1].applier).toBe('Cook');
+  });
+
+  it('test report 2', () => {
+    const reportPollBox = pollbox.report(new Date(2000, 12, 1, 11, 33));
+    expect(reportPollBox.determines.length).toBe(4);
+    expect(reportPollBox.determines[0].applier).toBe('John');
+  });
 });
