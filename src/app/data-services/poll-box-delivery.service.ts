@@ -24,7 +24,7 @@ export interface PollBoxReqRes {
   providedIn: 'root'
 })
 export class PollBoxDeliveryService {
-  private pollBoxsMap = new Map<QuestionIdType, Subject<PollBoxRes>>();
+  private pollBoxsMap = new Map<QuestionIdType, Subject<Pollbox>>();
 
   constructor(
     private pollPullService: PollPullerService,
@@ -32,15 +32,19 @@ export class PollBoxDeliveryService {
   ) {
   }
 
-  pollBoxObser(questionId: QuestionIdType): Observable<PollBoxRes> {
+  private pollBoxSubject(questionId: QuestionIdType): Subject<Pollbox> {
     const obser = this.pollBoxsMap.get(questionId);
     if (obser) {
       return obser;
     } else {
-      const newObser = new ReplaySubject<PollBoxRes>(1);
+      const newObser = new ReplaySubject<Pollbox>(1);
       this.pollBoxsMap.set(questionId, newObser);
       return newObser;
     }
+  }
+
+  pollBoxObser(questionId: QuestionIdType): Observable<Pollbox> {
+    return this.pollBoxSubject(questionId);
   }
 
   request(pollBoxReq: PollBoxReq): Observable<PollBoxReqRes> {
@@ -50,17 +54,24 @@ export class PollBoxDeliveryService {
           map(res => {
             switch (res.status) {
               case 'SUCCESS':
+                this.pollBoxSubject(pollBoxReq.questionId).next(res.pollBox);
                 return {req: pollBoxReq, status: 'SUCCESS'};
               case 'FAIL':
                 return {req: pollBoxReq, status: 'FAIL'};
             }
           }));
       case 'post':
-        return this.pollPostService.post(pollBoxReq.determine).pipe(
-          map(res => {
-
-          })
-        );
+        return this.pollPostService.post(pollBoxReq.determine)
+          .pipe(
+            map(res => {
+              switch (res.status) {
+                case 'SUCCESS':
+                  return {status: 'SUCCESS', req: pollBoxReq};
+                case 'FAIL':
+                  return {status: 'FAIL', req: pollBoxReq};
+              }
+            })
+          );
     }
   }
 

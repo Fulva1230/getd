@@ -8,6 +8,8 @@ import {Question} from '../containers/question';
 import {UserEventService} from '../user-event.service';
 import {addWarning} from '@angular-devkit/build-angular/src/utils/webpack-diagnostics';
 import {ToastNotifierService} from '../toast-notifier.service';
+import {catchError, map, mergeAll} from 'rxjs/operators';
+import {of} from 'rxjs';
 
 @Component({
   selector: 'app-pollbox',
@@ -53,22 +55,28 @@ export class PollboxComponent implements OnInit, OnChanges {
 
   determine(select: string): void {
     this.isDeterminePosting = true;
-    this.datetimeProvider.now().subscribe((date) => {
-        this.pollPoster
-          .post(new Determine(this.applierName, this.questionId, select, date))
-          .subscribe(() => {
-          }, _ => {
-            this.toastNotifier.fail('Failed to post the choice');
-            this.isDeterminePosting = false;
-          }, () => {
-            this.toastNotifier.success('Successfully posted the choice');
-            this.isDeterminePosting = false;
-            this.refreshPoll().then();
-          });
-      }, () => {
+    this.datetimeProvider.now().pipe(
+      map(date => {
+        return this.pollPoster.post(new Determine(this.applierName, this.questionId, select, date));
+      }),
+      mergeAll(),
+      catchError(err => {
         this.isDeterminePosting = false;
+        return of({status: 'FAIL'} as const);
+      })
+    ).subscribe(res => {
+      switch (res.status) {
+        case 'SUCCESS':
+          this.toastNotifier.success('Successfully posted the choice');
+          this.isDeterminePosting = false;
+          this.refreshPoll().then();
+          break;
+        case 'FAIL':
+          this.toastNotifier.fail('Failed to post the choice');
+          this.isDeterminePosting = false;
+          break;
       }
-    );
+    });
   }
 
   private updateCurrentDetermine(): void {

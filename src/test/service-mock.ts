@@ -7,6 +7,7 @@ import {Pollbox} from '../app/containers/pollbox';
 import {DatetimeService} from '../app/cloudservices/datetime.service';
 import {UserEventService} from '../app/user-event.service';
 import {ToastNotifierService} from '../app/toast-notifier.service';
+import {map} from 'rxjs/operators';
 
 export const mockPollList = () => {
   const pollListSubject = new ReplaySubject<string[]>(1);
@@ -29,16 +30,14 @@ export const mockPollPullerAndPoster = () => {
     } else {
       const fakePollBox = createFakePollbox();
       pollboxmap.set(questionId, fakePollBox);
-      return of({status: 'SUCCESS', pollBox: optionalPollBox});
+      return of({status: 'SUCCESS', pollBox: fakePollBox});
     }
   });
   pollPosterSpy.post.and.callFake((request) => {
-    const doneSubject = new ReplaySubject<void>(1);
-    pollPullerSpy.pull(request.questionId).subscribe((pollbox) => {
-      pollbox.pollBox.determines.push(request);
-      doneSubject.next(undefined);
-    });
-    return doneSubject;
+    return pollPullerSpy.pull(request.questionId).pipe(map(pollBox => {
+      pollBox.pollBox.determines.push(request);
+      return {status: 'SUCCESS', determine: request} as const;
+    }));
   });
   return {pollPullerSpy, pollPosterSpy};
 };

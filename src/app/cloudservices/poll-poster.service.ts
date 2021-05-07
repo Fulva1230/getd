@@ -17,14 +17,12 @@ export class PollPosterService {
   constructor(private loginService: LoginService, private http: HttpClient) {
   }
 
-  // TODO change implementation to make it post when subscribed
   /**
    *
    *
-   * @returns the observable to notify the completeness, if the determine fail to post to the web, the observable return an error
+   * @returns the observable to notify the result
    */
   post(determine: Determine): Observable<PollPostRes> {
-    const observable = new ReplaySubject<void>(1);
     return this.loginService.accessToken().pipe(
       take(1),
       map(accessToken => {
