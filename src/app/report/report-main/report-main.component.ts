@@ -2,7 +2,7 @@ import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {PollListService} from '../../cloudservices/poll-list.service';
 import {PollBoxDeliveryService} from '../../data-services/poll-box-delivery.service';
 import {Pollbox} from '../../containers/pollbox';
-import {Observable, Subject} from 'rxjs';
+import {combineLatest, Subscription} from 'rxjs';
 import {FormControl} from '@angular/forms';
 
 @Component({
@@ -11,9 +11,12 @@ import {FormControl} from '@angular/forms';
   styleUrls: ['./report-main.component.scss']
 })
 export class ReportMainComponent implements OnInit, OnChanges {
-  pollBoxObserMap: Map<string, Observable<Pollbox>> = new Map<string, Observable<Pollbox>>();
-  pollBoxMap = new Map<string, Pollbox>();
+  subscriptions: Subscription[] = [];
+  pollboxes = new Map<string, Pollbox>();
+  pollBoxesTitle = new Set<string>();
   deadlineFormControl = new FormControl();
+  selectedItemFormControl = new FormControl();
+  selectedPollBox?: Pollbox;
 
   constructor(
     private pollListService: PollListService,
@@ -23,24 +26,35 @@ export class ReportMainComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.pollListService.pollList.subscribe(pollList => {
+      this.unsubscribeAll();
       for (const questionId of pollList) {
-        if (!this.pollBoxObserMap.has(questionId)) {
-          const observ = this.pollBoxDeliveryService.pollBoxObser(questionId);
-          this.pollBoxObserMap.set(questionId, observ);
-          observ.subscribe(pollbox => {
-            this.pollBoxMap.set(pollbox.question.title, pollbox);
-          });
-        }
+        const subscription = this.pollBoxDeliveryService.pollBoxObser(questionId).subscribe(pollbox => {
+          if (!this.pollBoxesTitle.has(pollbox.question.title)) {
+            this.pollBoxesTitle.add(pollbox.question.title);
+            this.pollboxes.set(pollbox.question.title, pollbox);
+          }
+        });
+        this.subscriptions.push(subscription);
       }
     });
-    this.deadlineFormControl.valueChanges.subscribe(value => {
-      console.log(value);
+    combineLatest(
+      [this.deadlineFormControl.valueChanges, this.selectedItemFormControl.valueChanges]
+    ).subscribe(([date, title]) => {
+      this.selectedPollBox = this.pollboxes.get(title).report(date);
     });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.deadline) {
-      console.log(changes.deadline);
+    if (changes.selectedItem) {
+      console.log('fff');
+      this.selectedPollBox = changes.selectedItem.currentValue;
     }
+  }
+
+  private unsubscribeAll(): void {
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
+    this.subscriptions = [];
   }
 }

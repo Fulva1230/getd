@@ -3,8 +3,8 @@ import {UserEventService} from './user-event.service';
 import {LoginService} from './cloudservices/login.service';
 import {skip, take} from 'rxjs/operators';
 import {PollListService} from './cloudservices/poll-list.service';
-import {NbToastrService} from '@nebular/theme';
 import {ToastNotifierService} from './toast-notifier.service';
+import {PollBoxDeliveryService} from './data-services/poll-box-delivery.service';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +19,8 @@ export class AppComponent implements OnInit {
     private loginService: LoginService,
     private userEventService: UserEventService,
     private pollListSerivice: PollListService,
-    private toastNotifier: ToastNotifierService
+    private toastNotifier: ToastNotifierService,
+    private pollBoxDeliveryService: PollBoxDeliveryService
   ) {
   }
 
@@ -47,6 +48,17 @@ export class AppComponent implements OnInit {
     this.pollListSerivice.refresh().subscribe(pollList => {
       if (pollList) {
         this.toastNotifier.success('Successfully got the poll list');
+        for (const questionId of pollList) {
+          this.pollBoxDeliveryService
+            .request({type: 'poll', questionId})
+            .subscribe(res => {
+              switch (res.status) {
+                case 'FAIL':
+                  this.toastNotifier.fail('Failed to get the pollbox');
+                  break;
+              }
+            });
+        }
       } else {
         this.toastNotifier.fail('Failed to get the poll list');
       }

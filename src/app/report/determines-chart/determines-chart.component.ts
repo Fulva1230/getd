@@ -14,7 +14,15 @@ export class DeterminesChartComponent implements OnInit, OnChanges {
   isDoughnut = false;
   legendPosition = 'below';
   colorScheme = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+    domain: [
+      '#9bee6e',
+      '#fd4f75',
+      '#eede52',
+      '#5abbdb',
+      '#4870ff',
+      '#be25ff',
+      '#ff2525',
+    ]
   };
   results: { name: string, value: number }[];
 

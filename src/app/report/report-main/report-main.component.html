@@ -2,3 +2,10 @@
 <nb-date-timepicker
   withSeconds
   #dateTimePicker></nb-date-timepicker>
+<nb-select [formControl]="selectedItemFormControl" placeholder="Select Showcase">
+  <nb-option *ngFor="let title of pollBoxesTitle" value="{{title}}">{{title}}</nb-option>
+</nb-select>
+<div *ngIf="selectedPollBox">
+  <app-determines-chart [pollBox]="selectedPollBox"></app-determines-chart>
+  <app-pollbox-table [pollBox]="selectedPollBox"></app-pollbox-table>
+</div>

@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
-import {PollListService} from '../cloudservices/poll-list.service';
-import {PollBoxRes, PollPullerService} from '../cloudservices/poll-puller.service';
+import {PollPullerService} from '../cloudservices/poll-puller.service';
 import {PollPosterService} from '../cloudservices/poll-poster.service';
 import {Observable, ReplaySubject, Subject} from 'rxjs';
 import {Pollbox} from '../containers/pollbox';
@@ -28,8 +27,12 @@ export class PollBoxDeliveryService {
 
   constructor(
     private pollPullService: PollPullerService,
-    private pollPostService: PollPosterService
+    private pollPostService: PollPosterService,
   ) {
+  }
+
+  get pollBoxs(): Map<string, Observable<Pollbox>> {
+    return this.pollBoxsMap;
   }
 
   private pollBoxSubject(questionId: QuestionIdType): Subject<Pollbox> {

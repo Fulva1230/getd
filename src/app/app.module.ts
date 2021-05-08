@@ -10,12 +10,16 @@ import {HttpClientModule} from '@angular/common/http';
 import {DebugCenterComponent} from './debug/debug-center/debug-center.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
-  NbThemeModule,
-  NbLayoutModule,
   NbButtonModule,
   NbCardModule,
-  NbToastrModule,
-  NbSpinnerModule, NbDatepickerModule, NbInputModule, NbTimepickerModule
+  NbDatepickerModule,
+  NbInputModule,
+  NbLayoutModule,
+  NbSelectModule,
+  NbSpinnerModule,
+  NbThemeModule,
+  NbTimepickerModule,
+  NbToastrModule
 } from '@nebular/theme';
 import {NbEvaIconsModule} from '@nebular/eva-icons';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -63,6 +67,7 @@ import {ReportMainComponent} from './report/report-main/report-main.component';
     NbDatepickerModule.forRoot(),
     NbTimepickerModule.forRoot(),
     ReactiveFormsModule,
+    NbSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

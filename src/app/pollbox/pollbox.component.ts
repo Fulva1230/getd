@@ -1,12 +1,8 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Pollbox} from '../containers/pollbox';
-import {PollPullerService} from '../cloudservices/poll-puller.service';
-import {PollPosterService} from '../cloudservices/poll-poster.service';
 import {Determine} from '../containers/determine';
 import {DatetimeService} from '../cloudservices/datetime.service';
 import {Question} from '../containers/question';
-import {UserEventService} from '../user-event.service';
-import {addWarning} from '@angular-devkit/build-angular/src/utils/webpack-diagnostics';
 import {ToastNotifierService} from '../toast-notifier.service';
 import {catchError, map, mergeAll} from 'rxjs/operators';
 import {of} from 'rxjs';
@@ -26,7 +22,6 @@ export class PollboxComponent implements OnInit, OnChanges {
 
   constructor(
     private datetimeProvider: DatetimeService,
-    private userEventService: UserEventService,
     private toastNotifier: ToastNotifierService,
     private pollBoxDeliveryService: PollBoxDeliveryService
   ) {
@@ -36,10 +31,6 @@ export class PollboxComponent implements OnInit, OnChanges {
     this.pollBoxDeliveryService.pollBoxObser(this.questionId).subscribe(pollBox => {
       this.pollbox = pollBox;
       this.updateCurrentDetermine();
-    });
-    await this.refreshPoll();
-    this.userEventService.refreshObs().subscribe(async () => {
-      await this.refreshPoll();
     });
   }
 
