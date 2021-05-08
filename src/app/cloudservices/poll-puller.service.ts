@@ -45,7 +45,7 @@ export class PollPullerService {
             const question = new Question(spreadsheetId, title, descrptionsStrArr, selectionsStrArr);
             const pollbox = new Pollbox(question);
             if (applies) {
-              pollbox.determines = applies.map(apply => {
+              pollbox.determines = applies.slice(1).map(apply => {
                   const [chosen, name, datetime]: [string, string, string] = apply.values.map(value => value.formattedValue);
                   return new Determine(name, spreadsheetId, chosen, new Date(datetime));
                 }
