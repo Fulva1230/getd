@@ -37,10 +37,12 @@ export class AppComponent implements OnInit {
     this.loginService.accessToken().pipe(skip(1)).subscribe(res => {
       if (res) {
         this.toastNotifier.success('Successfully login');
+        this.refresh();
       } else {
         this.toastNotifier.fail('Failed to login');
       }
     });
+    this.loginService.silentLogin();
     this.userEventService.updateUsernameObs().pipe(take(1)).subscribe(name => this.username = name);
     this.nbMenuService
       .onItemClick()
