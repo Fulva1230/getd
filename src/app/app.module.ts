@@ -3,8 +3,8 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {PollboxComponent} from './pollbox/pollbox.component';
-import {PollListComponent} from './poll-list/poll-list.component';
+import {PollboxComponent} from './vote-page/pollbox/pollbox.component';
+import {PollListComponent} from './vote-page/poll-list/poll-list.component';
 import {LoginDebugComponent} from './debug/login-debug/login-debug.component';
 import {HttpClientModule} from '@angular/common/http';
 import {DebugCenterComponent} from './debug/debug-center/debug-center.component';
@@ -12,9 +12,11 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   NbButtonModule,
   NbCardModule,
+  NbContextMenuModule,
   NbDatepickerModule,
   NbInputModule,
   NbLayoutModule,
+  NbMenuModule,
   NbSelectModule,
   NbSpinnerModule,
   NbThemeModule,
@@ -68,6 +70,8 @@ import {ReportMainComponent} from './report/report-main/report-main.component';
     NbTimepickerModule.forRoot(),
     ReactiveFormsModule,
     NbSelectModule,
+    NbContextMenuModule,
+    NbMenuModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,10 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {UserEventService} from './user-event.service';
 import {LoginService} from './cloudservices/login.service';
-import {skip, take} from 'rxjs/operators';
+import {filter, skip, take} from 'rxjs/operators';
 import {PollListService} from './cloudservices/poll-list.service';
 import {ToastNotifierService} from './toast-notifier.service';
 import {PollBoxDeliveryService} from './data-services/poll-box-delivery.service';
+import {NbMenuService} from '@nebular/theme';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,15 +14,22 @@ import {PollBoxDeliveryService} from './data-services/poll-box-delivery.service'
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  loginHint = '';
   username = '';
+  items = [
+    {title: 'Login'},
+    {title: 'Refresh'},
+    {title: 'Vote'},
+    {title: 'Report'},
+  ];
 
   constructor(
     private loginService: LoginService,
     private userEventService: UserEventService,
     private pollListSerivice: PollListService,
     private toastNotifier: ToastNotifierService,
-    private pollBoxDeliveryService: PollBoxDeliveryService
+    private pollBoxDeliveryService: PollBoxDeliveryService,
+    private nbMenuService: NbMenuService,
+    private router: Router,
   ) {
   }
 
@@ -33,6 +42,27 @@ export class AppComponent implements OnInit {
       }
     });
     this.userEventService.updateUsernameObs().pipe(take(1)).subscribe(name => this.username = name);
+    this.nbMenuService
+      .onItemClick()
+      .pipe(
+        filter(bag => bag.tag === 'main')
+      )
+      .subscribe(bag => {
+        switch (bag.item.title) {
+          case 'Login':
+            this.login();
+            break;
+          case 'Refresh':
+            this.refresh();
+            break;
+          case 'Vote':
+            this.router.navigate(['']);
+            break;
+          case 'Report':
+            this.router.navigate(['report']);
+            break;
+        }
+      });
   }
 
   usernameInput(): void {

@@ -44,11 +44,15 @@ export class PollPullerService {
             const selectionsStrArr: string[] = selections[0].values.map(value => value.effectiveValue.stringValue);
             const question = new Question(spreadsheetId, title, descrptionsStrArr, selectionsStrArr);
             const pollbox = new Pollbox(question);
-            pollbox.determines = applies.map(apply => {
-                const [chosen, name, datetime]: [string, string, string] = apply.values.map(value => value.formattedValue);
-                return new Determine(name, spreadsheetId, chosen, new Date(datetime));
-              }
-            );
+            if (applies) {
+              pollbox.determines = applies.map(apply => {
+                  const [chosen, name, datetime]: [string, string, string] = apply.values.map(value => value.formattedValue);
+                  return new Determine(name, spreadsheetId, chosen, new Date(datetime));
+                }
+              );
+            } else {
+              pollbox.determines = [];
+            }
             return {status: 'SUCCESS', pollBox: pollbox};
           }));
         } else {

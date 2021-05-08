@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, of, ReplaySubject} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {LoginService} from './login.service';
 import {catchError, map, mergeAll, take} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
@@ -38,7 +38,7 @@ export class PollPosterService {
                 headers: {Authorization: `Bearer ${accessToken}`},
                 params: {
                   insertDataOption: 'INSERT_ROWS',
-                  valueInputOption: 'USER_ENTERED',
+                  valueInputOption: 'RAW',
                 },
                 observe: 'response'
               })

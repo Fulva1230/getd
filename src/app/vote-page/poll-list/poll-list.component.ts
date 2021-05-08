@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {PollListService} from '../cloudservices/poll-list.service';
-import {UserEventService} from '../user-event.service';
+import {Component, OnInit} from '@angular/core';
+import {PollListService} from '../../cloudservices/poll-list.service';
+import {UserEventService} from '../../user-event.service';
 
 @Component({
   selector: 'app-poll-list',

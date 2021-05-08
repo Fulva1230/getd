@@ -1,8 +1,7 @@
 <nb-layout>
   <nb-layout-header fixed>
-    <button nbButton (click)="login()">LOGIN</button>
-    <button nbButton (click)="refresh()">REFRESH</button>
-    <input [(ngModel)]="username" (input)="usernameInput()"/>
+    <button [nbContextMenu]="items" nbButton nbContextMenuTag="main" outline>MENU</button>
+    <input (input)="usernameInput()" [(ngModel)]="username" nbInput/>
   </nb-layout-header>
 
   <nb-layout-column>

@@ -1,14 +1,6 @@
 import {PollboxComponent} from './pollbox.component';
-import {PollPosterService} from '../cloudservices/poll-poster.service';
-import {PollPullerService} from '../cloudservices/poll-puller.service';
-import {DatetimeService} from '../cloudservices/datetime.service';
-import {
-  mockDateTime,
-  mockPollBoxDeliveryService,
-  mockPollPullerAndPoster,
-  mockToastNotifier,
-  mockUserEventService
-} from '../../test/service-mock';
+import {DatetimeService} from '../../cloudservices/datetime.service';
+import {mockDateTime, mockPollBoxDeliveryService, mockToastNotifier} from '../../../test/service-mock';
 
 describe('PollboxComponent', () => {
   let component: PollboxComponent;
@@ -16,7 +8,7 @@ describe('PollboxComponent', () => {
 
   beforeEach(() => {
     datetimeSpy = mockDateTime();
-    component = new PollboxComponent(datetimeSpy, mockUserEventService(), mockToastNotifier(), mockPollBoxDeliveryService());
+    component = new PollboxComponent(datetimeSpy, mockToastNotifier(), mockPollBoxDeliveryService());
     component.questionId = '123';
     component.applierName = 'Stone';
     component.ngOnInit();

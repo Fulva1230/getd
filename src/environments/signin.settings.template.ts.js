@@ -1,5 +1,3 @@
-import {UserManagerSettings} from "oidc-client";
-
 export const settings = {
   authority: 'https://accounts.google.com',
   client_id: '',

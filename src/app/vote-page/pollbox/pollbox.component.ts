@@ -1,12 +1,12 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {Pollbox} from '../containers/pollbox';
-import {Determine} from '../containers/determine';
-import {DatetimeService} from '../cloudservices/datetime.service';
-import {Question} from '../containers/question';
-import {ToastNotifierService} from '../toast-notifier.service';
+import {Pollbox} from '../../containers/pollbox';
+import {Determine} from '../../containers/determine';
+import {DatetimeService} from '../../cloudservices/datetime.service';
+import {Question} from '../../containers/question';
+import {ToastNotifierService} from '../../toast-notifier.service';
 import {catchError, map, mergeAll} from 'rxjs/operators';
 import {of} from 'rxjs';
-import {PollBoxDeliveryService} from '../data-services/poll-box-delivery.service';
+import {PollBoxDeliveryService} from '../../data-services/poll-box-delivery.service';
 
 @Component({
   selector: 'app-pollbox',

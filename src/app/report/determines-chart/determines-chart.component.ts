@@ -47,7 +47,6 @@ export class DeterminesChartComponent implements OnInit, OnChanges {
       }
       this.results = [];
       for (const [key, value] of chartMap.entries()) {
-        console.log(`${key} is ${value}`);
         this.results.push({name: key, value});
       }
     }

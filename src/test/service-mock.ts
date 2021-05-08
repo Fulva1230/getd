@@ -1,6 +1,5 @@
-import {of, ReplaySubject, Subject} from 'rxjs';
+import {of, ReplaySubject} from 'rxjs';
 import {createFakePollbox, createFakePollList} from './sample-data';
-import {PollboxComponent} from '../app/pollbox/pollbox.component';
 import {PollPullerService} from '../app/cloudservices/poll-puller.service';
 import {PollPosterService} from '../app/cloudservices/poll-poster.service';
 import {Pollbox} from '../app/containers/pollbox';
